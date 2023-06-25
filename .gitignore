@@ -7,6 +7,8 @@ build
 .vscode
 lib/bin
 
+.idea
+
 iso-codes/
 
 # Avoid mistakenly tracking original po files.

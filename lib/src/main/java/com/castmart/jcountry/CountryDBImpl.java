@@ -1,10 +1,7 @@
 package com.castmart.jcountry;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,25 +10,52 @@ import org.json.JSONTokener;
 class CountryDBImpl implements CountryDB {
     private static final  String bundleName = "iso_3166.iso_3166-1";
     private static final  String databaseFile = "./3166-1.json";
+    private static final HashMap<Locale, ResourceBundle> loadedBundles = new HashMap<>();
+
+    private static final HashMap<String, Country> countryMapByAlpha2 = new HashMap<>();
+
+    private static final HashMap<String, Country> countryMapByAlpha3 = new HashMap<>();
+
+    private static final HashMap<String, Country> countryMapByName = new HashMap<>();
+    protected CountryDBImpl() {
+        generateDatabase();
+    }
 
     @Override
-    public ArrayList<Country> getCountries(Locale languageLocale) {
-        try {
-            // Get translations based on language
-            var translations = ResourceBundle.getBundle(bundleName,languageLocale);
-            return loadCountriesFromJSON(translations);
-        } catch(MissingResourceException exception) {
-            // If translations are not found then return the default info in english
-            return loadCountriesFromJSON(null);
-        } 
-        
-    } 
+    public HashMap<String, Country> getCountriesMapByAlpha2() {
+        return countryMapByAlpha2;
+    }
 
-    private ArrayList<Country> loadCountriesFromJSON(ResourceBundle translations) {
+    @Override
+    public HashMap<String, Country> getCountriesMapByAlpha3() {
+        return countryMapByAlpha3;
+    }
+
+    @Override
+    public HashMap<String, Country> getCountriesMapByName() {
+        return countryMapByName;
+    }
+
+    @Override
+    public Optional<ResourceBundle> getCountriesTranslations(Locale languageLocale) {
+        try {
+            // Optimize the bundle loading/reading
+            if (loadedBundles.containsKey(languageLocale)) {
+                return Optional.of(loadedBundles.get(languageLocale));
+            }
+            ResourceBundle bundle = ResourceBundle.getBundle(bundleName, languageLocale);
+            loadedBundles.put(languageLocale, bundle);
+            return Optional.of(bundle);
+        } catch (MissingResourceException exception) {
+            return Optional.empty();
+        }
+    }
+
+
+    private void generateDatabase() {
         ArrayList<Country> countries = new ArrayList<>();
         try {
             InputStream inputStream = getClass().getClassLoader().getResourceAsStream(databaseFile);
-            System.out.println("<<< " + CountryDBImpl.class.getResource("/").getPath());
             if (inputStream == null) {
                 throw new NullPointerException("Cannot find resource file " + databaseFile);
             }
@@ -39,30 +63,23 @@ class CountryDBImpl implements CountryDB {
             JSONObject object = new JSONObject(tokener);
             JSONArray countriesObject = object.getJSONArray("3166-1");
             for (int index = 0 ; index < countriesObject.length(); index++) {
-
-                countries.add(readCountry((JSONObject)countriesObject.get(index), translations));
+                Country country = readCountry((JSONObject)countriesObject.get(index));
+                countryMapByAlpha2.put(country.getAlpha2(), country);
+                countryMapByAlpha3.put(country.getAlpha3(), country);
+                countryMapByName.put(country.getName(), country);
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-        return countries;
     }
 
-    private Country readCountry(JSONObject countryObject, ResourceBundle translations) {
+    private Country readCountry(JSONObject countryObject) {
         String alpha2 = countryObject.getString("alpha_2");
         String alpha3 = countryObject.getString("alpha_3");
         String flag = countryObject.getString("flag");
         String numeric = countryObject.getString("numeric");
-        String name = null;
-        try {
-            name = translations != null? translations.getString(countryObject.getString("name")) : countryObject.getString("name");
-        } catch (NullPointerException | MissingResourceException | ClassCastException exception) {
-            // No translation for the country, then default to english
-            name = countryObject.getString("name");
-            exception.printStackTrace();
-        }
-        
-        return new Country(alpha2, alpha3, flag, name, numeric); 
+        String name = countryObject.getString("name");
+        return new Country(alpha2, alpha3, flag, name, numeric);
     }
 
 }
