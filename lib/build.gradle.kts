@@ -23,14 +23,26 @@ dependencies {
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation("com.google.guava:guava:31.1-jre")
+    implementation("org.json:json:20230618")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.2")
 }
 
-testing {
-    suites {
-        // Configure the built-in test suite
-        val test by getting(JvmTestSuite::class) {
-            // Use JUnit Jupiter test framework
-            useJUnitJupiter("5.9.1")
-        }
+//testing {
+//    suites {
+//        // Configure the built-in test suite
+//        val test by getting(JvmTestSuite::class) {
+//            // Use JUnit Jupiter test framework
+//            useJUnitJupiter("5.9.1")
+//        }
+//    }
+//}
+
+
+tasks.withType<Test> {
+    useJUnitPlatform()
+    testLogging {
+        events("PASSED", "FAILED", "SKIPPED")
+        showStandardStreams = true
     }
 }
