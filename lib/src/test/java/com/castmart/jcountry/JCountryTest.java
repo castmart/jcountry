@@ -62,4 +62,16 @@ class JCountryTest {
             assertTrue(!bundle.isEmpty());
         });
     }
+
+    @Test
+    void getTranslatedCountryName() {
+        JCountry jcountry = new JCountry();
+        CountryDB countryDB = jcountry.getCountriesDB();
+        var dbByAlpha2 = countryDB.getCountriesMapByAlpha2();
+
+        Optional<ResourceBundle> bundle = countryDB.getCountriesTranslations(Locale.GERMAN);
+        var translatedCountryName = bundle.get().getString(dbByAlpha2.get("MX").getName());
+
+        assertEquals("Mexiko", translatedCountryName);
+    }
 }
