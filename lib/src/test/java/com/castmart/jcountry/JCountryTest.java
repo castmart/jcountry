@@ -5,9 +5,7 @@ package com.castmart.jcountry;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Locale;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -50,5 +48,18 @@ class JCountryTest {
 
         Optional<ResourceBundle> bundleTwo = countryDB.getCountriesTranslations(new Locale("Unexistent Lang"));
         assertFalse(bundleTwo.isPresent());
+    }
+
+    @Test
+    void testJCountryReadsTranslations() {
+        // More than 50% of work population is covered with these languages.
+        ArrayList<String> languages = new ArrayList<>(Arrays.asList("zh_CN", "zh_HK", "zh_TW", "es", "de", "bn", "bn_IN", "pt", "pt_BR", "ru", "ja", "hi", "ar", "pa", "fr", "tr", "ko"));
+        JCountry jcountry = new JCountry();
+        CountryDB countryDB = jcountry.getCountriesDB();
+
+        languages.forEach( it -> {
+            Optional<ResourceBundle> bundle = countryDB.getCountriesTranslations(new Locale(it));
+            assertTrue(!bundle.isEmpty());
+        });
     }
 }
