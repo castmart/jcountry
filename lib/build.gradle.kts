@@ -7,6 +7,8 @@
  * This project uses @Incubating APIs which are subject to change.
  */
 
+version = "v0.0.1"
+
 plugins {
     // Apply the java-library plugin for API and implementation separation.
     `java-library`
@@ -34,4 +36,34 @@ tasks.withType<Test> {
         events("PASSED", "FAILED", "SKIPPED")
         showStandardStreams = true
     }
+}
+
+tasks.withType<Javadoc> {
+    sourceSets.getByName("main").java.srcDirs.forEach {
+        it.mkdirs()
+    }
+    source = sourceSets.getByName("main").allJava
+    classpath += project.files(sourceSets.getByName("main").output.resourcesDir) + project.files(sourceSets.getByName("test").output.resourcesDir)
+}
+
+tasks.register<Jar>("sourcesJar") {
+    manifest {
+        attributes(Pair("Implementation-Title", project.name), Pair("Implementation-Version", project.version))
+    }
+    from(sourceSets.getByName("main").allSource)
+    archiveClassifier.set("sources")
+}
+
+tasks.register<Jar>("javadocJar") {
+    manifest {
+        attributes(Pair("Implementation-Title", project.name), Pair("Implementation-Version", project.version))
+    }
+    dependsOn("javadoc")
+    classifier = "javadoc"
+    from(tasks.getByName("javadoc"))
+}
+
+artifacts {
+    archives(tasks.getByName("sourcesJar"))
+    archives(tasks.getByName("javadocJar"))
 }

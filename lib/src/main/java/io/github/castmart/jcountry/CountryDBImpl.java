@@ -7,6 +7,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+/**
+ * CountryDBImpl is a class implementation of CountryDB that uses org.JSON library to load the OSI-3166-1 countries
+ * information. This class also loads the Countries translations as Resource bundle objects, and to avoid loading such
+ * elements, it stores them in a hash map for future access.
+ *
+ */
 class CountryDBImpl implements CountryDB {
     private static final  String bundleName = "iso_3166.iso_3166-1";
     private static final  String databaseFile = "./3166-1.json";

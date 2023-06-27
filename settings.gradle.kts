@@ -10,3 +10,4 @@
 
 rootProject.name = "jcountry"
 include("lib")
+project(":lib").name = "jcountry"

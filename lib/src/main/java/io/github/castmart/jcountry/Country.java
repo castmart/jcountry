@@ -1,5 +1,8 @@
 package io.github.castmart.jcountry;
 
+/**
+ * Model Class to store Country Information.
+ */
 public class Country {
 
     private String alpha2;
