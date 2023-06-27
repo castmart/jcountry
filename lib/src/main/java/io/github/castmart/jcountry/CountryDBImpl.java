@@ -1,4 +1,4 @@
-package com.castmart.jcountry;
+package io.github.castmart.jcountry;
 
 import java.io.InputStream;
 import java.util.*;
@@ -39,7 +39,7 @@ class CountryDBImpl implements CountryDB {
     @Override
     public Optional<ResourceBundle> getCountriesTranslations(Locale languageLocale) {
         try {
-            // Optimize the bundle loading/reading
+            // Optimize the bundle loading/reading to be loaded once per Locale.
             if (loadedBundles.containsKey(languageLocale)) {
                 return Optional.of(loadedBundles.get(languageLocale));
             }

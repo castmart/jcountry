@@ -1,4 +1,4 @@
-package com.castmart.jcountry;
+package io.github.castmart.jcountry;
 
 public class Country {
 
