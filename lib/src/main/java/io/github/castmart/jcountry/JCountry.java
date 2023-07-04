@@ -12,6 +12,8 @@ public class JCountry {
     private static JCountry instance;
     private final CountryDB countryDB = new CountryDBImpl();
 
+    private final LanguageDB languageDB = new LanguageDBImpl();
+
     private JCountry() {}
 
     public static JCountry getInstance() {
@@ -28,4 +30,12 @@ public class JCountry {
     public CountryDB getCountriesDB() {
         return countryDB;
     }
-}
+
+    /**
+     * Get the ISO 639-2 languages DB.
+     * @return an instance of LanguageDB
+     */
+    public LanguageDB getLanguageDB() {
+        return languageDB;
+    }
+ }

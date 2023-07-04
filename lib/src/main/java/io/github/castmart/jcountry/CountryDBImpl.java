@@ -15,7 +15,7 @@ import org.json.JSONTokener;
  */
 class CountryDBImpl implements CountryDB {
     private static final  String bundleName = "iso_3166.iso_3166-1";
-    private static final  String databaseFile = "./3166-1.json";
+    private static final  String databaseFile = "3166-1.json";
     private static final HashMap<Locale, ResourceBundle> loadedBundles = new HashMap<>();
 
     private static final HashMap<String, Country> countryMapByAlpha2 = new HashMap<>();
@@ -24,7 +24,11 @@ class CountryDBImpl implements CountryDB {
 
     private static final HashMap<String, Country> countryMapByName = new HashMap<>();
     protected CountryDBImpl() {
-        generateDatabase();
+        generateDatabase(false);
+    }
+
+    protected CountryDBImpl(boolean isInternalTest) {
+        generateDatabase(isInternalTest);
     }
 
     @Override
@@ -58,10 +62,11 @@ class CountryDBImpl implements CountryDB {
     }
 
 
-    private void generateDatabase() {
-        ArrayList<Country> countries = new ArrayList<>();
+    private void generateDatabase(boolean isInternalTest) {
         try {
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(databaseFile);
+            InputStream inputStream = getClass()
+                    .getClassLoader()
+                    .getResourceAsStream(isInternalTest ? "./"+databaseFile : databaseFile);
             if (inputStream == null) {
                 throw new NullPointerException("Cannot find resource file " + databaseFile);
             }
@@ -80,12 +85,13 @@ class CountryDBImpl implements CountryDB {
     }
 
     private Country readCountry(JSONObject countryObject) {
-        String alpha2 = countryObject.getString("alpha_2");
-        String alpha3 = countryObject.getString("alpha_3");
-        String flag = countryObject.getString("flag");
-        String numeric = countryObject.getString("numeric");
-        String name = countryObject.getString("name");
-        return new Country(alpha2, alpha3, flag, name, numeric);
+        return new Country(
+                countryObject.getString("alpha_2"),
+                countryObject.getString("alpha_3"),
+                countryObject.getString("flag"),
+                countryObject.getString("name"),
+                countryObject.getString("numeric")
+        );
     }
 
 }

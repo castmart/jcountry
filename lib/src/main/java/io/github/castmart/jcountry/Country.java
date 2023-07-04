@@ -1,7 +1,7 @@
 package io.github.castmart.jcountry;
 
 /**
- * Model Class to store Country Information.
+ * Model Class to store Country Information. ISO-3166-1
  */
 public class Country {
 
@@ -11,7 +11,7 @@ public class Country {
     private String name;
     private String numeric;
 
-    public Country(String alpha2, String alpha3, String flag, String name, String numeric) {
+    protected Country(String alpha2, String alpha3, String flag, String name, String numeric) {
         this.alpha2 = alpha2;
         this.alpha3 = alpha3;
         this.flag = flag;
