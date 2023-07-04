@@ -1,4 +1,4 @@
-version := "0.0.1"
+version := "0.0.2"
 
 target_data_directory := lib/src/main/resources/
 target_po_directory := lib/src/main/resources/iso_3166/
