@@ -14,16 +14,16 @@ For the status of the translations, please check the [iso codes](https://github.
 <dependency>
     <groupId>io.github.castmart</groupId>
     <artifactId>jcountry</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
 </dependency>
 ```
 ```kotlin
 // Gradle Kotlin
-implementation("io.github.castmart:jcountry:0.0.1")
+implementation("io.github.castmart:jcountry:0.0.2")
 ```
 ```java
 // Gradle short
-implementation 'io.github.castmart:jcountry:0.0.1'
+implementation 'io.github.castmart:jcountry:0.0.2'
 ```
 ## How to use it?
 ```java
