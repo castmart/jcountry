@@ -1,4 +1,4 @@
-package io.github.castmart.jcountry;
+package com.jimdo.jcountry;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

@@ -1,4 +1,4 @@
-package io.github.castmart.jcountry;
+package com.jimdo.jcountry;
 
 import java.util.HashMap;
 import java.util.Locale;

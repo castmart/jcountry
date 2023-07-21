@@ -1,4 +1,4 @@
-package io.github.castmart.jcountry;
+package com.jimdo.jcountry;
 
 /**
  * Model Class to store Country Information. ISO-3166-1

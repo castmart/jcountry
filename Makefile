@@ -1,4 +1,3 @@
-version := "0.0.2"
 
 target_data_directory := lib/src/main/resources/
 target_po_directory := lib/src/main/resources/iso_3166/
@@ -29,17 +28,3 @@ delete-po-and-mo:
 
 .PHONY: get-latest-iso-files
 get-latest-iso-files: clone-iso-codes transpile-translations delete-po-and-mo
-
-# Generating deployable
-.PHONY: generate-artifacts
-generate-artifacts:
-	JCOUNTRY_VERSION=${version} ./gradlew build
-
-.PHONY: generate-pom
-publish-to-ossrh:
-	OSSRH_USER=${OSSRH_USER} \
-	OSSRH_PASS=${OSSRH_PASS} \
-	GPG_SIGNING_KEY_PASSWORD=${GPG_SIGNING_KEY_PASSWORD} \
-	GPG_SIGNING_KEY=${GPG_SIGNING_KEY} \
-	JCOUNTRY_VERSION=${version} \
-	./gradlew publish

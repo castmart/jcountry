@@ -9,22 +9,11 @@ This will help having a quick source for translations of country names, and the 
 For the status of the translations, please check the [iso codes](https://github.com/sailfishos-mirror/iso-codes) repository (which is the original source of the iso files and translations).
 
 ## Dependency
-```java
-// Maven
-<dependency>
-    <groupId>io.github.castmart</groupId>
-    <artifactId>jcountry</artifactId>
-    <version>0.0.2</version>
-</dependency>
-```
 ```kotlin
 // Gradle Kotlin
-implementation("io.github.castmart:jcountry:0.0.2")
+implementation("com.jimdo:jcountry:0.1.0")
 ```
-```java
-// Gradle short
-implementation 'io.github.castmart:jcountry:0.0.2'
-```
+
 ## How to use it?
 ```java
     JCountry jcountry = new JCountry();
