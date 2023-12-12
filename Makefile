@@ -43,3 +43,7 @@ publish-to-ossrh:
 	GPG_SIGNING_KEY=${GPG_SIGNING_KEY} \
 	JCOUNTRY_VERSION=${version} \
 	./gradlew publish
+
+.PHONY: test
+test:
+	./gradlew test

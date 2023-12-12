@@ -59,6 +59,10 @@ class JCountryTest {
 
         languages.forEach( it -> {
             Optional<ResourceBundle> bundle = countryDB.getCountriesTranslations(new Locale(it));
+            if (bundle.isEmpty())
+                System.out.println("Empty bundle for "+it);
+            else
+                System.out.println("Processing "+it);
             assertTrue(!bundle.isEmpty());
         });
     }
@@ -114,6 +118,10 @@ class JCountryTest {
 
         languages.forEach( it -> {
             Optional<ResourceBundle> bundle = languageDB.getLanguagesTranslations(new Locale(it));
+            if (bundle.isEmpty())
+                System.out.println("Empty bundle for "+it);
+            else
+                System.out.println("Processing "+it);
             assertTrue(!bundle.isEmpty(), it + " translation");
         });
     }
@@ -121,6 +129,7 @@ class JCountryTest {
     @Test
     void getTranslatedLanguageName() {
         LanguageDB languageDB = new LanguageDBImpl(true);
+        JCountry.getInstance().getLanguageDB();
         var dbByAlpha2 = languageDB.getLanguagesMapByAlpha2();
 
         Optional<ResourceBundle> bundle = languageDB.getLanguagesTranslations(Locale.GERMAN);
