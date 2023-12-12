@@ -27,7 +27,7 @@ dependencies {
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     // implementation("com.google.guava:guava:31.1-jre")
-    implementation("org.json:json:20230618")
+    implementation("org.json:json:20231013")
 
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.1")
 }
