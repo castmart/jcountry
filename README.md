@@ -1,3 +1,5 @@
+[![CI](https://github.com/castmart/jcountry/actions/workflows/ci.yaml/badge.svg)](https://github.com/castmart/jcountry/actions/workflows/ci.yaml)
+
 # JCountry
 
 This project tries to replicate the same functionality as [pycountry](https://github.com/flyingcircusio/pycountry) by wrapping iso files and provide a programatic interface.

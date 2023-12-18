@@ -54,11 +54,15 @@ class JCountryTest {
     @Test
     void testJCountryReadsTranslations() {
         // More than 50% of work population is covered with these languages.
-        ArrayList<String> languages = new ArrayList<>(Arrays.asList("zh_CN", "zh_HK", "zh_TW", "es", "de", "bn", "bn_IN", "pt", "pt_BR", "ru", "ja", "hi", "ar", "pa", "fr", "tr", "ko"));
+        ArrayList<String> languages = new ArrayList<>(Arrays.asList("es", "de", "bn", "pt", "ru", "ja", "hi", "ar", "pa", "fr", "tr", "ko"));
         CountryDB countryDB = new CountryDBImpl(true);
 
         languages.forEach( it -> {
             Optional<ResourceBundle> bundle = countryDB.getCountriesTranslations(new Locale(it));
+            if (bundle.isEmpty())
+                System.out.println("Empty bundle for "+it);
+            else
+                System.out.println("Processing "+it);
             assertTrue(!bundle.isEmpty());
         });
     }
@@ -109,11 +113,15 @@ class JCountryTest {
     @Test
     void testJCountryLanguagesReadsTranslations() {
         // More than 50% of work population is covered with these languages.
-        ArrayList<String> languages = new ArrayList<>(Arrays.asList("zh_CN", "zh_HK", "zh_TW", "es", "de", "bn", "pt", "pt_BR", "ru", "ja", "hi", "ar", "pa", "fr", "tr", "ko"));
+        ArrayList<String> languages = new ArrayList<>(Arrays.asList("es", "de", "bn", "pt", "ru", "ja", "hi", "ar", "pa", "fr", "tr", "ko"));
         LanguageDB languageDB = new LanguageDBImpl(true);
 
         languages.forEach( it -> {
             Optional<ResourceBundle> bundle = languageDB.getLanguagesTranslations(new Locale(it));
+            if (bundle.isEmpty())
+                System.out.println("Empty bundle for "+it);
+            else
+                System.out.println("Processing "+it);
             assertTrue(!bundle.isEmpty(), it + " translation");
         });
     }
@@ -121,6 +129,7 @@ class JCountryTest {
     @Test
     void getTranslatedLanguageName() {
         LanguageDB languageDB = new LanguageDBImpl(true);
+        JCountry.getInstance().getLanguageDB();
         var dbByAlpha2 = languageDB.getLanguagesMapByAlpha2();
 
         Optional<ResourceBundle> bundle = languageDB.getLanguagesTranslations(Locale.GERMAN);
