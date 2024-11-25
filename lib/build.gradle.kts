@@ -29,7 +29,7 @@ dependencies {
     // implementation("com.google.guava:guava:31.1-jre")
     implementation("org.json:json:20231013")
 
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.11.3")
 }
 
 tasks.withType<Test> {
